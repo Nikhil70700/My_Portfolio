@@ -5,9 +5,9 @@ export const personalInfo = {
   email: "nikhilpandya829@gmail.com",
   phone: "7070031705",
   formattedPhone: "+91 7070031705",
-  github: "https://github.com/nikhilpandey829",
-  linkedin: "https://linkedin.com/in/nikhilkumar-pandey",
-  resume: "#download-resume",
+  github: "https://github.com/Nikhil70700",
+  linkedin: "https://www.linkedin.com/in/nikhil-kumar-pandey-747047190/",
+  resume: "Nikhil_Kumar_Pandey_Resume.pdf",
   about: "I am a software developer with experience in frontend, backend and full-stack web development. I focus on building practical, scalable, real-world web applications and SaaS platforms.",
   objectiveSummary: [
     "Practical Software Developer with hands-on full-stack experience.",
@@ -167,7 +167,7 @@ export const mainProject = {
     { step: "01", title: "Member Onboarding", desc: "Registration input + BCA charge verification" },
     { step: "02", title: "Payment Workflow", desc: "QR scan / manual payment approval engine" },
     { step: "03", title: "Role Dashboard", desc: "Super Admin & Gym Admin operational controls" },
-    { step: "04", title: "WhatsApp Gateway", desc: "Automated credential & monthly invoice alerts" }
+    { step: "04", title: "WhatsApp Integration", desc: "Automated credential & subscription alerts" }
   ]
 };
 
@@ -235,24 +235,24 @@ export const experiences = [
 
 export const education = [
   {
-    degree: "Master of Computer Applications (MCA)",
+    degree: "Master of Computer Applications",
     institution: "JIS College of Engineering",
-    duration: "August 2022 – August 2024",
     location: "Kalyani, West Bengal, India",
+    duration: "08/2022 – 08/2024",
     badge: "Master's Degree"
   },
   {
-    degree: "Bachelor of Science — Information Technology (B.Sc. IT)",
+    degree: "Bachelor of Science — Information Technology",
     institution: "Marwari College",
-    duration: "August 2018 – February 2022",
     location: "Bhagalpur, Bihar, India",
+    duration: "08/2018 – 02/2022",
     badge: "Bachelor's Degree"
   },
   {
     degree: "Higher Secondary Education — Information Technology",
     institution: "Jawahar Navodaya Vidyalaya",
-    duration: "August 2016 – August 2018",
     location: "Katihar, Bihar, India",
+    duration: "08/2016 – 08/2018",
     badge: "Senior Secondary"
   }
 ];
@@ -261,15 +261,15 @@ export const certifications = [
   {
     title: "Certificate of Excellence in Java",
     issuer: "Coding Ninjas",
-    badge: "Excellence",
+    badge: "Certificate of Excellence",
     icon: "Award",
-    description: "Advanced competency in Java language specifications, object-oriented design patterns, and enterprise problem solving."
+    type: "Java Programming"
   },
   {
-    title: "Certificate of Completion: Data Structures in Java",
+    title: "Certificate of Completion — Data Structures in Java",
     issuer: "Coding Ninjas",
-    badge: "Core CS",
-    icon: "CheckCircle2",
-    description: "In-depth mastery of linear and non-linear data structures, algorithms, time-space complexity optimization."
+    badge: "Certificate of Completion",
+    icon: "Award",
+    type: "Data Structures in Java"
   }
 ];

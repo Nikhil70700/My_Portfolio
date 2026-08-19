@@ -1,123 +1,112 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Html, MeshDistortMaterial } from '@react-three/drei';
+import React, { useRef, useState, useMemo } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Html } from '@react-three/drei';
 import * as THREE from 'three';
+import { Suspense } from 'react';
 
-// Central Futuristic Developer Core Object
-function CentralCore({ isMobile }) {
+// ─── Central Futuristic Developer Core ─────────────────────────────────────────
+
+function CentralCore() {
   const outerMeshRef = useRef();
   const innerMeshRef = useRef();
-  const ringRef = useRef();
 
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     if (outerMeshRef.current) {
-      outerMeshRef.current.rotation.x += delta * 0.25;
-      outerMeshRef.current.rotation.y += delta * 0.35;
+      outerMeshRef.current.rotation.x += delta * 0.08;
+      outerMeshRef.current.rotation.y += delta * 0.12;
     }
     if (innerMeshRef.current) {
-      innerMeshRef.current.rotation.y -= delta * 0.5;
-    }
-    if (ringRef.current) {
-      ringRef.current.rotation.z += delta * 0.4;
-      ringRef.current.rotation.x += delta * 0.2;
+      innerRef.current.rotation.y -= delta * 0.15;
     }
   });
 
-  const coreScale = isMobile ? 0.9 : 1.3;
+  // Sleek geometric core structure
+  const innerRef = useRef();
 
   return (
-    <group scale={coreScale}>
-      {/* Outer Polyhedral Mesh */}
+    <group scale={1.15}>
+      {/* Outer sleek cage */}
       <mesh ref={outerMeshRef}>
-        <icosahedronGeometry args={[1.5, 1]} />
-        <MeshDistortMaterial
+        <icosahedronGeometry args={[1.5, 0]} />
+        <meshStandardMaterial
           color="#00F0FF"
+          emissive="#0284C7"
+          emissiveIntensity={0.5}
           wireframe
           transparent
-          opacity={0.4}
-          distort={0.25}
-          speed={2.5}
-          roughness={0.1}
+          opacity={0.6}
+          roughness={0.2}
+          metalness={0.9}
         />
       </mesh>
-
-      {/* Inner Glowing Energy Core */}
-      <mesh ref={innerMeshRef}>
-        <octahedronGeometry args={[0.85, 0]} />
+      {/* Inner solid energy core */}
+      <mesh ref={innerRef}>
+        <octahedronGeometry args={[0.9, 0]} />
         <meshStandardMaterial
           color="#3B82F6"
           emissive="#00F0FF"
           emissiveIntensity={1.2}
-          roughness={0.2}
-          metalness={0.8}
+          roughness={0.1}
+          metalness={0.9}
         />
-      </mesh>
-
-      {/* Orbital Ring */}
-      <mesh ref={ringRef} rotation={[Math.PI / 4, 0, 0]}>
-        <torusGeometry args={[2.2, 0.03, 16, 100]} />
-        <meshBasicMaterial color="#8B5CF6" transparent opacity={0.6} />
       </mesh>
     </group>
   );
 }
 
-// Single Tech Satellite Node Component
-function TechNode({ position, color, label, iconText, delay = 0, isMobile }) {
-  const nodeRef = useRef();
-  const [hovered, setHovered] = useState(false);
+// ─── Tech Satellite Node ───────────────────────────────────────────────────────
 
-  useFrame((state) => {
-    if (nodeRef.current) {
-      const t = state.clock.getElapsedTime() + delay;
-      nodeRef.current.position.y = position[1] + Math.sin(t * 1.5) * 0.15;
-      nodeRef.current.rotation.y += 0.01;
+function TechNode({ position, color, label, iconText, orbitOffset = 0, radius = 3 }) {
+  const groupRef = useRef();
+  const [hovered, setHovered] = useState(false);
+  const phaseRef = useRef(orbitOffset);
+
+  // Slow orbital movement
+  useFrame((state, delta) => {
+    if (groupRef.current) {
+      phaseRef.current += delta * 0.15; // Slow cinematic orbit
+      const x = Math.cos(phaseRef.current) * radius;
+      const z = Math.sin(phaseRef.current) * radius;
+      // Slight vertical bobbing based on position and time
+      const y = position[1] + Math.sin(state.clock.elapsedTime * 0.5 + orbitOffset) * 0.3;
+      groupRef.current.position.set(x, y, z);
     }
   });
 
-  const adjustedPos = isMobile
-    ? [position[0] * 0.65, position[1] * 0.65, position[2] * 0.65]
-    : position;
+  const sphereGeo = useMemo(() => new THREE.SphereGeometry(0.3, 16, 16), []);
+  const haloGeo = useMemo(() => new THREE.RingGeometry(0.38, 0.42, 24), []);
+  const sphereMat = useMemo(() => new THREE.MeshStandardMaterial({
+    color,
+    emissive: color,
+    emissiveIntensity: hovered ? 1.5 : 0.8,
+    roughness: 0.2,
+    metalness: 0.8,
+  }), [color, hovered]);
+  const haloMat = useMemo(() => new THREE.MeshBasicMaterial({
+    color,
+    transparent: true,
+    opacity: hovered ? 0.8 : 0.4,
+    side: THREE.DoubleSide
+  }), [color, hovered]);
 
   return (
-    <group ref={nodeRef} position={adjustedPos}>
+    <group ref={groupRef}>
       <mesh
+        geometry={sphereGeo}
+        material={sphereMat}
         onPointerOver={() => setHovered(true)}
         onPointerOut={() => setHovered(false)}
-      >
-        <sphereGeometry args={[isMobile ? 0.28 : 0.35, 16, 16]} />
-        <meshStandardMaterial
-          color={color}
-          emissive={color}
-          emissiveIntensity={hovered ? 1.5 : 0.6}
-          roughness={0.3}
-          metalness={0.7}
-        />
-      </mesh>
+      />
+      <mesh geometry={haloGeo} material={haloMat} rotation={[Math.PI / 2, 0, 0]} />
 
-      {/* Outer Halo Ring */}
-      <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[isMobile ? 0.35 : 0.45, isMobile ? 0.38 : 0.48, 32]} />
-        <meshBasicMaterial color={color} transparent opacity={0.5} side={THREE.DoubleSide} />
-      </mesh>
-
-      {/* Crisp 3D HTML Label */}
-      <Html
-        position={[0, isMobile ? 0.5 : 0.6, 0]}
-        center
-        distanceFactor={10}
-        zIndexRange={[100, 0]}
-      >
+      <Html position={[0, 0.6, 0]} center distanceFactor={10} zIndexRange={[100, 0]}>
         <div
-          className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[11px] font-mono whitespace-nowrap transition-all duration-300 pointer-events-none select-none ${
-            hovered
-              ? 'bg-obsidian-900/90 border-cyanGlow text-cyanGlow shadow-[0_0_15px_rgba(0,240,255,0.4)] scale-110'
+          className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[11px] font-mono whitespace-nowrap transition-all duration-300 pointer-events-none select-none ${hovered
+              ? 'bg-obsidian-900/95 border-cyanGlow text-cyanGlow shadow-[0_0_15px_rgba(0,240,255,0.4)] scale-110'
               : 'bg-obsidian-950/80 border-gray-700/60 text-gray-200 backdrop-blur-md'
-          }`}
+            }`}
         >
-          <span className="font-bold text-xs" style={{ color }}>
-            {iconText}
-          </span>
+          <span className="font-bold text-xs" style={{ color }}>{iconText}</span>
           <span>{label}</span>
         </div>
       </Html>
@@ -125,168 +114,79 @@ function TechNode({ position, color, label, iconText, delay = 0, isMobile }) {
   );
 }
 
-// React 3D Icon Element
-function ReactAtomicNode({ position, isMobile }) {
-  const groupRef = useRef();
+
+
+function InteractiveScene() {
+  const sceneGroupRef = useRef();
+  const { viewport } = useThree();
+
+
+  const isDesktop = viewport.width > viewport.height;
+
+  const targetX = isDesktop ? viewport.width * 0.22 : 0;
+
+  const scale = isDesktop ? 1 : 0.75;
+
 
   useFrame((state, delta) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y += delta * 0.8;
-      groupRef.current.rotation.z += delta * 0.4;
-    }
-  });
-
-  const pos = isMobile ? [position[0] * 0.65, position[1] * 0.65, position[2] * 0.65] : position;
-  const radius = isMobile ? 0.45 : 0.6;
-
-  return (
-    <group position={pos}>
-      <group ref={groupRef}>
-        {/* Core Nucleus */}
-        <mesh>
-          <sphereGeometry args={[0.15, 16, 16]} />
-          <meshStandardMaterial color="#00F0FF" emissive="#00F0FF" emissiveIntensity={1} />
-        </mesh>
-        {/* 3 Atomic Electron Orbits */}
-        <mesh rotation={[Math.PI / 3, 0, 0]}>
-          <torusGeometry args={[radius, 0.02, 16, 50]} />
-          <meshBasicMaterial color="#00F0FF" transparent opacity={0.8} />
-        </mesh>
-        <mesh rotation={[-Math.PI / 3, 0, 0]}>
-          <torusGeometry args={[radius, 0.02, 16, 50]} />
-          <meshBasicMaterial color="#61DAFB" transparent opacity={0.8} />
-        </mesh>
-        <mesh rotation={[0, 0, Math.PI / 2]}>
-          <torusGeometry args={[radius, 0.02, 16, 50]} />
-          <meshBasicMaterial color="#38BDF8" transparent opacity={0.8} />
-        </mesh>
-      </group>
-
-      <Html position={[0, isMobile ? 0.6 : 0.8, 0]} center distanceFactor={10}>
-        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-obsidian-950/80 border border-cyanGlow/50 text-cyanGlow text-[11px] font-mono whitespace-nowrap backdrop-blur-md select-none pointer-events-none">
-          <span className="font-bold text-xs">⚛</span>
-          <span>React</span>
-        </div>
-      </Html>
-    </group>
-  );
-}
-
-// Main Interactive Scene Manager
-function InteractiveScene({ isMobile }) {
-  const sceneGroupRef = useRef();
-
-  // Subtle Mouse Parallax Reaction
-  useFrame((state) => {
     if (sceneGroupRef.current) {
       const { x, y } = state.pointer;
+      // Lerp position to targetX + parallax
+      const targetPosX = targetX + x * 0.5;
+      const targetPosY = isDesktop ? -y * 0.5 : 1.0 - y * 0.3; // Push up slightly on mobile so it doesn't overlap text
+
+      sceneGroupRef.current.position.x = THREE.MathUtils.lerp(sceneGroupRef.current.position.x, targetPosX, 0.05);
+      sceneGroupRef.current.position.y = THREE.MathUtils.lerp(sceneGroupRef.current.position.y, targetPosY, 0.05);
+
       sceneGroupRef.current.rotation.y = THREE.MathUtils.lerp(
         sceneGroupRef.current.rotation.y,
-        x * (isMobile ? 0.15 : 0.35),
+        x * 0.15,
         0.05
       );
       sceneGroupRef.current.rotation.x = THREE.MathUtils.lerp(
         sceneGroupRef.current.rotation.x,
-        -y * (isMobile ? 0.1 : 0.25),
+        -y * 0.1,
         0.05
       );
     }
   });
 
   return (
-    <group ref={sceneGroupRef}>
-      {/* Central 3D Developer Core */}
-      <CentralCore isMobile={isMobile} />
+    <group ref={sceneGroupRef} scale={scale} position={[targetX, 0, 0]}>
+      <CentralCore />
 
-      {/* React 3D Node */}
-      <ReactAtomicNode position={[-2.8, 1.6, 0.5]} isMobile={isMobile} />
-
-      {/* Code Node */}
-      <TechNode
-        position={[2.8, 1.8, -0.2]}
-        color="#38BDF8"
-        label="Code"
-        iconText="</>"
-        delay={0.5}
-        isMobile={isMobile}
-      />
-
-      {/* Node.js Node */}
-      <TechNode
-        position={[3.2, -1.2, 0.3]}
-        color="#10B981"
-        label="Node.js"
-        iconText="⬢"
-        delay={1.0}
-        isMobile={isMobile}
-      />
-
-      {/* Database Node */}
-      <TechNode
-        position={[-3.0, -1.4, -0.4]}
-        color="#F59E0B"
-        label="Database"
-        iconText="🗄️"
-        delay={1.5}
-        isMobile={isMobile}
-      />
-
-      {/* APIs Node */}
-      <TechNode
-        position={[0, 2.5, -1.0]}
-        color="#A855F7"
-        label="APIs"
-        iconText="⚡"
-        delay={2.0}
-        isMobile={isMobile}
-      />
-
-      {/* Git Node */}
-      <TechNode
-        position={[-1.8, -2.4, 0.8]}
-        color="#F97316"
-        label="Git"
-        iconText="⎇"
-        delay={2.5}
-        isMobile={isMobile}
-      />
-
-      {/* AI Node */}
-      <TechNode
-        position={[1.9, -2.5, 0.6]}
-        color="#EC4899"
-        label="AI"
-        iconText="✨"
-        delay={3.0}
-        isMobile={isMobile}
-      />
+      {/* 6 Curated Tech Nodes with clean orbital distribution */}
+      <TechNode position={[0, 1.2, 0]} radius={2.8} orbitOffset={0} color="#00F0FF" label="React" iconText="⚛" />
+      <TechNode position={[0, -1.0, 0]} radius={3.2} orbitOffset={Math.PI / 3} color="#10B981" label="Node.js" iconText="⬢" />
+      <TechNode position={[0, 0.8, 0]} radius={3.0} orbitOffset={(Math.PI * 2) / 3} color="#059669" label="MongoDB" iconText="🍃" />
+      <TechNode position={[0, -1.5, 0]} radius={3.4} orbitOffset={Math.PI} color="#A855F7" label="APIs" iconText="⚡" />
+      <TechNode position={[0, 1.5, 0]} radius={2.7} orbitOffset={(Math.PI * 4) / 3} color="#F97316" label="Git" iconText="⎇" />
+      <TechNode position={[0, -0.5, 0]} radius={3.5} orbitOffset={(Math.PI * 5) / 3} color="#EC4899" label="AI" iconText="✨" />
     </group>
   );
 }
 
 export const Hero3DScene = () => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
   return (
-    <div className="w-full h-full relative min-h-[350px] sm:min-h-[480px] lg:min-h-[580px] flex items-center justify-center pointer-events-auto">
-      <Canvas
-        camera={{ position: [0, 0, isMobile ? 8.5 : 7], fov: 50 }}
-        gl={{ antialias: true, alpha: true }}
-      >
-        <ambientLight intensity={0.7} />
-        <pointLight position={[10, 10, 10]} intensity={1.8} color="#00F0FF" />
-        <pointLight position={[-10, -10, -10]} intensity={1.2} color="#8B5CF6" />
-        <directionalLight position={[0, 5, 5]} intensity={1.0} color="#3B82F6" />
+    <div className="absolute inset-0 w-full h-full pointer-events-none">
+      {/* We allow pointer-events on the Canvas to capture interactions but keep the container passthrough if needed.
+          Actually we need pointer-events-auto on the canvas wrapper so it receives mouse. */}
+      <div className="w-full h-full pointer-events-auto">
+        <Canvas
+          camera={{ position: [0, 0, 8.5], fov: 50 }}
+          gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+          dpr={[1, Math.min(window.devicePixelRatio || 1, 2)]}
+        >
+          <ambientLight intensity={0.8} />
+          <pointLight position={[10, 10, 10]} intensity={1.8} color="#00F0FF" />
+          <pointLight position={[-10, -10, -10]} intensity={1.2} color="#8B5CF6" />
+          <directionalLight position={[0, 5, 5]} intensity={1.0} color="#3B82F6" />
 
-        <InteractiveScene isMobile={isMobile} />
-      </Canvas>
+          <Suspense fallback={null}>
+            <InteractiveScene />
+          </Suspense>
+        </Canvas>
+      </div>
     </div>
   );
 };

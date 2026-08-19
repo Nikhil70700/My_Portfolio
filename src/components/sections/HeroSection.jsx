@@ -22,15 +22,20 @@ export const HeroSection = ({ _onOpenCommand }) => {
     }
   };
 
+  const scrollToContact = () => {
+    soundFx.playClick();
+    const target = document.getElementById('contact');
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const handleDownloadResume = () => {
     soundFx.playClick();
-
-    // Resume download handler
     const resumeUrl = personalInfo.resume && personalInfo.resume !== '#download-resume'
       ? personalInfo.resume
       : '/resume.pdf';
 
-    // Create anchor and trigger download
     const link = document.createElement('a');
     link.href = resumeUrl;
     link.download = 'Nikhil_Kumar_Pandey_Resume.pdf';
@@ -40,24 +45,26 @@ export const HeroSection = ({ _onOpenCommand }) => {
     document.body.removeChild(link);
   };
 
+  const coreTech = ['React.js', 'JavaScript', 'Node.js', 'Express.js', 'MongoDB', 'MySQL'];
+
   // Staggered Animation Sequence Variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.18,
-        delayChildren: 0.2
+        staggerChildren: 0.12,
+        delayChildren: 0.1
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 25 },
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1.0] }
+      transition: { duration: 0.45, ease: [0.25, 0.1, 0.25, 1.0] }
     }
   };
 
@@ -66,16 +73,16 @@ export const HeroSection = ({ _onOpenCommand }) => {
     visible: {
       opacity: 1,
       scale: 1,
-      transition: { duration: 0.8, delay: 0.2, ease: "easeOut" }
+      transition: { duration: 0.7, delay: 0.15, ease: "easeOut" }
     }
   };
 
   return (
-    <section id="hero" className="relative min-h-[92vh] pt-28 pb-16 flex items-center justify-center overflow-hidden">
+    <section id="hero" className="relative min-h-screen pt-28 sm:pt-32 pb-16 flex items-center justify-center overflow-hidden">
 
       {/* Ambient Radial Background Glow */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyanGlow/10 rounded-full blur-[140px] pointer-events-none z-0" />
-      <div className="absolute bottom-10 right-10 w-[450px] h-[450px] bg-blueGlow/10 rounded-full blur-[160px] pointer-events-none z-0" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyanGlow/10 rounded-full blur-[160px] pointer-events-none z-0" />
+      <div className="absolute bottom-10 right-10 w-[450px] h-[450px] bg-blueGlow/10 rounded-full blur-[180px] pointer-events-none z-0" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10">
 
@@ -87,82 +94,111 @@ export const HeroSection = ({ _onOpenCommand }) => {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="lg:col-span-7 space-y-6 text-center lg:text-left pt-4 lg:pt-0"
+            className="lg:col-span-7 space-y-5 text-center lg:text-left pt-2 lg:pt-0"
           >
 
-            {/* Live Availability Badge */}
-            <motion.div variants={itemVariants} className="inline-flex items-center">
-              <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full glass-panel border-cyanGlow/30 text-xs font-medium text-gray-300 shadow-[0_0_20px_rgba(0,240,255,0.15)]">
-                <span className="relative flex h-2.5 w-2.5">
+            {/* Live Availability Badge & Current Role */}
+            <motion.div variants={itemVariants} className="inline-flex flex-wrap items-center justify-center lg:justify-start gap-2">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-panel border-cyanGlow/30 text-xs font-medium text-gray-200 shadow-[0_0_20px_rgba(0,240,255,0.15)]">
+                <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emeraldGlow opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emeraldGlow"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emeraldGlow"></span>
                 </span>
-                <span className="tracking-wide">Available for Full-Time Software & Full-Stack Roles</span>
-                <span className="text-gray-500 hidden sm:inline">|</span>
-                <span className="hidden sm:flex items-center gap-1 text-gray-400">
-                  <MapPin className="w-3.5 h-3.5 text-cyanGlow" />
+                <span className="tracking-wide">Available for Full-Time Roles</span>
+                <span className="text-gray-500 hidden sm:inline">•</span>
+                <span className="hidden sm:flex items-center gap-1 text-gray-300">
+                  <MapPin className="w-3 h-3 text-cyanGlow" />
                   {personalInfo.location}
                 </span>
               </div>
+
+              <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-800/80 border border-slate-700/70 text-xs font-mono text-cyanGlow">
+                <span>Current: Software Developer — GymSaathi</span>
+              </div>
             </motion.div>
 
-            {/* Step 3: Name Reveal */}
+            {/* Name Reveal */}
             <motion.div variants={itemVariants}>
-              <h1 className="text-4xl sm:text-6xl lg:text-6xl xl:text-7xl font-heading font-black tracking-tight uppercase">
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-heading font-black tracking-tight uppercase leading-none">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-gray-300 drop-shadow-[0_0_35px_rgba(0,240,255,0.25)]">
                   NIKHIL KUMAR PANDEY
                 </span>
               </h1>
             </motion.div>
 
-            {/* Step 4: Professional Title Reveal */}
-            <motion.div variants={itemVariants}>
+            {/* Professional Title */}
+            <motion.div variants={itemVariants} className="flex flex-wrap items-center justify-center lg:justify-start gap-3">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-cyanGlow/10 border border-cyanGlow/30">
                 <Sparkles className="w-4 h-4 text-cyanGlow animate-spin-slow" />
-                <h2 className="text-base sm:text-xl md:text-2xl font-heading font-bold text-cyanGlow tracking-widest uppercase">
+                <h2 className="text-sm sm:text-lg font-heading font-bold text-cyanGlow tracking-widest uppercase">
                   SOFTWARE DEVELOPER
                 </h2>
               </div>
+              <span className="text-xs sm:text-sm font-mono text-gray-400">
+                MERN / Full-Stack SaaS Developer
+              </span>
             </motion.div>
 
-            {/* Step 5: Description Reveal */}
+            {/* Core Technologies Badges */}
+            <motion.div variants={itemVariants} className="flex flex-wrap justify-center lg:justify-start gap-1.5 pt-1">
+              {coreTech.map((tech) => (
+                <span
+                  key={tech}
+                  className="px-2.5 py-1 rounded-md bg-obsidian-900/80 border border-cyanGlow/25 text-gray-200 text-xs font-mono font-medium hover:border-cyanGlow/50 transition-colors"
+                >
+                  {tech}
+                </span>
+              ))}
+            </motion.div>
+
+            {/* Concise Bio */}
             <motion.div variants={itemVariants}>
-              <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-sans font-normal">
-                "Building responsive, scalable and user-focused web applications across frontend, backend and full-stack development."
+              <p className="text-sm sm:text-base text-gray-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-sans font-normal">
+                Building responsive, scalable and user-focused web applications across frontend, backend and full-stack development with hands-on SaaS experience.
               </p>
             </motion.div>
 
-            {/* Step 6: CTA Buttons Reveal */}
+            {/* CTA Buttons Reveal: 3 Primary Actions */}
             <motion.div variants={itemVariants} className="pt-2">
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4">
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3">
 
-                {/* Primary Button: VIEW MY WORK */}
+                {/* VIEW MY WORK */}
                 <button
                   onClick={scrollToWork}
                   onMouseEnter={() => soundFx.playHover()}
-                  className="px-7 py-4 rounded-xl bg-gradient-to-r from-cyanGlow via-cyan-400 to-blueGlow text-obsidian-950 font-heading font-extrabold text-sm tracking-wider uppercase hover:shadow-[0_0_35px_rgba(0,240,255,0.6)] hover:scale-[1.03] active:scale-[0.97] transition-all duration-300 flex items-center gap-2.5 group cursor-pointer"
+                  className="px-5 py-3 rounded-xl bg-gradient-to-r from-cyanGlow via-cyan-400 to-blueGlow text-obsidian-950 font-heading font-extrabold text-xs sm:text-sm tracking-wider uppercase hover:shadow-[0_0_30px_rgba(0,240,255,0.6)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center gap-2 group cursor-pointer"
                 >
                   <Eye className="w-4 h-4 group-hover:scale-110 transition-transform" />
                   <span>VIEW MY WORK</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </button>
 
-                {/* Secondary Button: DOWNLOAD RESUME */}
+                {/* DOWNLOAD RESUME */}
                 <button
                   onClick={handleDownloadResume}
                   onMouseEnter={() => soundFx.playHover()}
-                  className="px-7 py-4 rounded-xl glass-panel hover:border-cyanGlow/60 text-white font-heading font-bold text-sm tracking-wider uppercase hover:bg-white/10 hover:shadow-[0_0_25px_rgba(0,240,255,0.2)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center gap-2.5 group cursor-pointer"
+                  className="px-5 py-3 rounded-xl glass-panel hover:border-cyanGlow/60 text-white font-heading font-bold text-xs sm:text-sm tracking-wider uppercase hover:bg-white/10 hover:shadow-[0_0_20px_rgba(0,240,255,0.2)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center gap-2 group cursor-pointer"
                 >
                   <Download className="w-4 h-4 text-cyanGlow group-hover:translate-y-0.5 transition-transform" />
                   <span>DOWNLOAD RESUME</span>
                 </button>
 
+                {/* CONTACT ME */}
+                <button
+                  onClick={scrollToContact}
+                  onMouseEnter={() => soundFx.playHover()}
+                  className="px-5 py-3 rounded-xl bg-slate-800/80 border border-slate-700 hover:border-cyanGlow/40 text-gray-200 font-heading font-bold text-xs sm:text-sm tracking-wider uppercase hover:bg-slate-700/80 transition-all duration-300 flex items-center gap-2 cursor-pointer"
+                >
+                  <Mail className="w-4 h-4 text-cyanGlow" />
+                  <span>CONTACT ME</span>
+                </button>
+
               </div>
             </motion.div>
 
-            {/* Step 7: Additional Links (Social Links Reveal) */}
-            <motion.div variants={itemVariants} className="pt-4">
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-5 pt-3 border-t border-gray-800/80">
+            {/* Social Links Reveal */}
+            <motion.div variants={itemVariants} className="pt-2">
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4 pt-3 border-t border-gray-800/80">
                 <span className="text-xs font-mono uppercase tracking-widest text-gray-400">
                   Connect:
                 </span>

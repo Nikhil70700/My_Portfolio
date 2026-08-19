@@ -268,23 +268,7 @@ function ExperienceCard({ exp, index }) {
   );
 }
 
-// ─── Summary stat pill ────────────────────────────────────────────────────────
 
-function StatPill({ value, label, color }) {
-  return (
-    <div
-      className="flex flex-col items-center px-5 py-3 rounded-xl border bg-slate-900/60 backdrop-blur-sm"
-      style={{ borderColor: `${color}33` }}
-    >
-      <span className="text-lg font-heading font-extrabold" style={{ color }}>
-        {value}
-      </span>
-      <span className="text-[11px] font-mono text-slate-400 uppercase tracking-wider mt-0.5">
-        {label}
-      </span>
-    </div>
-  );
-}
 
 // ─── Main Section ─────────────────────────────────────────────────────────────
 
@@ -336,22 +320,27 @@ export const ExperienceSection = () => {
             Hands-on experience across SaaS development, full-stack engineering, and WordPress solutions.
           </motion.p>
 
-          {/* Quick stats row */}
+          {/* Factual Focus Highlights */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-40px' }}
             transition={{ duration: 0.45, delay: 0.22 }}
-            className="flex flex-wrap justify-center gap-3 pt-4"
+            className="flex flex-wrap justify-center gap-2 pt-4"
           >
-            <StatPill value="3" label="Roles" color="#00F0FF" />
-            <StatPill value="10+" label="Tech Tags" color="#38BDF8" />
-            <StatPill value="SaaS" label="Focus Area" color="#8B5CF6" />
+            {['Software Development', 'Full-Stack Engineering', 'SaaS Platform Development'].map((pill, pIdx) => (
+              <span
+                key={pIdx}
+                className="px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-slate-700/80 text-xs font-mono text-cyan-300 backdrop-blur-sm"
+              >
+                {pill}
+              </span>
+            ))}
           </motion.div>
         </div>
 
         {/* ── Animated vertical timeline ── */}
-        <div ref={containerRef} className="relative">
+        <div ref={containerRef} className="relative transform-gpu rotate-y-3" style={{ perspective: '1200px' }}>
           {/* Scrolling timeline line */}
           <TimelineLine containerRef={containerRef} />
 

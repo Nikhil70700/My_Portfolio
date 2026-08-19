@@ -33,6 +33,14 @@ export const ContactSection = () => {
     e.preventDefault();
     soundFx.playSuccess();
     confetti({ particleCount: 80, spread: 70, origin: { y: 0.7 } });
+
+    // Open default mail client with form content pre-filled
+    const subject = encodeURIComponent(formState.subject || 'Message from Portfolio');
+    const body = encodeURIComponent(
+      `Name: ${formState.name}\nEmail: ${formState.email}\n\n${formState.message}`
+    );
+    window.open(`mailto:${personalInfo.email}?subject=${subject}&body=${body}`);
+
     setSubmitted(true);
     setTimeout(() => {
       setSubmitted(false);
@@ -235,8 +243,11 @@ export const ContactSection = () => {
                     className="w-full py-3.5 rounded-xl bg-gradient-to-r from-cyanGlow to-blueGlow text-obsidian-950 font-heading font-bold text-sm hover:shadow-[0_0_25px_rgba(0,240,255,0.4)] transition-all flex items-center justify-center gap-2 group"
                   >
                     <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    <span>Send Message to Nikhil</span>
+                    <span>Send via Email Client</span>
                   </button>
+                  <p className="text-center text-[11px] text-gray-500 font-mono">
+                    Opens your default mail app with this message pre-filled.
+                  </p>
                 </form>
               )}
 

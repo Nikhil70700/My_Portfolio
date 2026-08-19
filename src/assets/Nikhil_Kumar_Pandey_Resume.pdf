@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en" class="dark scroll-smooth">
+  <head>
+    <script type="module">import { injectIntoGlobalHook } from "/@react-refresh";
+injectIntoGlobalHook(window);
+window.$RefreshReg$ = () => {};
+window.$RefreshSig$ = () => (type) => type;</script>
+
+    <script type="module" src="/@vite/client"></script>
+
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nikhil Kumar Pandey | Software Developer & Full Stack Developer</title>
+    <meta name="description" content="Nikhil Kumar Pandey — Software Developer & Full Stack Developer with expertise in React.js, Node.js, Express.js, GymSaathi SaaS engineering, WordPress development, and AI-assisted workflows." />
+    <meta name="keywords" content="Nikhil Kumar Pandey, Software Developer, Full Stack Developer, React.js, Node.js, GymSaathi, Greater Noida, Java, MongoDB" />
+    <meta name="author" content="Nikhil Kumar Pandey" />
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Nikhil Kumar Pandey | Software Developer & Full Stack Developer" />
+    <meta property="og:description" content="Explore the cinematic 3D dark-mode developer portfolio of Nikhil Kumar Pandey, full-stack engineer and SaaS creator." />
+    <meta property="og:type" content="website" />
+  </head>
+  <body class="bg-[#040508] text-gray-100 antialiased selection:bg-[#00F0FF]/30 selection:text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx?t=1786263596610"></script>
+  </body>
+</html>

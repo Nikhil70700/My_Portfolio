@@ -83,3 +83,19 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
 }
+
+/* ── prefers-reduced-motion: disable heavy animations ─────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Focus-visible outline for keyboard navigation ─────────────────────── */
+:focus-visible {
+  outline: 2px solid #00F0FF;
+  outline-offset: 2px;
+}

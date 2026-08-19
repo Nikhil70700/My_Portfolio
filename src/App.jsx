@@ -8,8 +8,12 @@ import { TechStackSection } from './components/sections/TechStackSection';
 import { MainProjectSection } from './components/sections/MainProjectSection';
 import { ExperienceSection } from './components/sections/ExperienceSection';
 import { EducationSection } from './components/sections/EducationSection';
+import { CertificationsSection } from './components/sections/CertificationsSection';
+import { ModernDevSection } from './components/sections/ModernDevSection';
 import { ContactSection } from './components/sections/ContactSection';
 import { Footer } from './components/layout/Footer';
+
+
 
 export function App() {
   const [commandOpen, setCommandOpen] = useState(false);
@@ -27,7 +31,6 @@ export function App() {
         soundEnabled={soundEnabled}
         setSoundEnabled={setSoundEnabled}
       />
-
       {/* Quick Command Palette Modal */}
       <CommandPalette
         isOpen={commandOpen}
@@ -44,6 +47,8 @@ export function App() {
         <MainProjectSection />
         <ExperienceSection />
         <EducationSection />
+        <CertificationsSection />
+        <ModernDevSection />
         <ContactSection />
       </main>
 

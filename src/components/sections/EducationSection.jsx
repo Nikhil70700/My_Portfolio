@@ -1,117 +1,102 @@
 import React from 'react';
-import { GraduationCap, Award, Calendar, MapPin, CheckCircle2, ShieldCheck, BookOpen } from 'lucide-react';
-import { education, certifications } from '../../data/portfolioData';
-import { GlassCard } from '../ui/GlassCard';
+import { motion } from 'framer-motion';
+import { GraduationCap, Calendar, MapPin, Building } from 'lucide-react';
+import { education } from '../../data/portfolioData';
+import { soundFx } from '../../utils/soundEffects';
 
 export const EducationSection = () => {
   return (
-    <section id="education" className="py-24 relative z-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="education" className="py-24 relative z-10 overflow-hidden">
+      {/* Background ambient glows */}
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-cyan-500/5 rounded-full blur-[160px] pointer-events-none" />
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-3 mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full glass-panel border-cyanGlow/30 text-xs font-mono text-cyanGlow uppercase tracking-wider">
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto space-y-3 mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.45 }}
+            className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-xs font-mono text-cyan-400 uppercase tracking-wider"
+          >
             <GraduationCap className="w-3.5 h-3.5" />
-            <span>Academic & Verified Training</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-heading font-extrabold text-gradient">
-            Education & Industry Certifications
-          </h2>
-          <p className="text-gray-400 text-sm sm:text-base">
-            Formal computer science degree qualifications combined with rigorous Java algorithm & data structures certifications.
-          </p>
+            <span>Academic Background</span>
+          </motion.div>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.5, delay: 0.08 }}
+            className="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-white tracking-tight"
+          >
+            Formal <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-sky-400">Education</span>
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+            className="text-slate-400 text-sm sm:text-base"
+          >
+            Verified degree programs in Computer Applications and Information Technology.
+          </motion.p>
         </div>
 
-        {/* Two-Column Grid: Education on Left, Certifications on Right */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          
-          {/* Left Column: Academic Education Timeline */}
-          <div className="lg:col-span-7 space-y-6">
-            <div className="flex items-center gap-2 mb-4">
-              <BookOpen className="w-5 h-5 text-cyanGlow" />
-              <h3 className="text-xl font-heading font-bold text-white">
-                Academic Background
-              </h3>
-            </div>
+        {/* Clean Timeline / Horizontal Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+          {education.map((item, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.5, delay: idx * 0.12 }}
+              onMouseEnter={() => soundFx.playHover()}
+              className="relative flex flex-col justify-between p-6 sm:p-7 rounded-2xl bg-slate-900/70 border border-slate-800/80 hover:border-cyan-500/50 transition-all duration-300 backdrop-blur-sm group hover:shadow-[0_8px_30px_rgba(0,240,255,0.08)]"
+            >
+              {/* Accent top line on hover */}
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-cyan-500/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-            <div className="space-y-4">
-              {education.map((edu, idx) => (
-                <GlassCard key={idx} delay={idx * 0.08} className="p-6 space-y-3 hover:border-cyanGlow/40">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <span className="px-2.5 py-0.5 rounded-md bg-cyanGlow/10 border border-cyanGlow/30 text-cyanGlow font-mono text-[11px] font-semibold">
-                        {edu.badge}
-                      </span>
-                      <h4 className="text-base sm:text-lg font-heading font-bold text-white mt-2">
-                        {edu.degree}
-                      </h4>
-                      <p className="text-sm font-semibold text-gray-300 mt-0.5">
-                        {edu.institution}
-                      </p>
-                    </div>
+              <div className="space-y-4">
+                {/* Badge & Duration */}
+                <div className="flex items-center justify-between gap-2 flex-wrap">
+                  <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-[11px] font-mono font-medium">
+                    {item.badge}
+                  </span>
+                  <span className="flex items-center gap-1 text-xs font-mono text-slate-400">
+                    <Calendar className="w-3.5 h-3.5 text-cyan-400" />
+                    {item.duration}
+                  </span>
+                </div>
 
-                    <div className="text-right font-mono text-xs text-gray-400 shrink-0">
-                      <div className="flex items-center gap-1 justify-end">
-                        <Calendar className="w-3.5 h-3.5 text-cyanGlow" />
-                        <span>{edu.duration}</span>
-                      </div>
-                      <div className="flex items-center gap-1 justify-end mt-1 text-[11px]">
-                        <MapPin className="w-3 h-3 text-gray-400" />
-                        <span>{edu.location}</span>
-                      </div>
-                    </div>
+                {/* Degree Title */}
+                <h3 className="text-lg font-heading font-extrabold text-white group-hover:text-cyan-300 transition-colors leading-snug">
+                  {item.degree}
+                </h3>
+
+                {/* Institution */}
+                <div className="space-y-1.5 pt-1 border-t border-slate-800/80">
+                  <div className="flex items-center gap-2 text-sm text-slate-200 font-medium">
+                    <Building className="w-4 h-4 text-cyan-400 shrink-0" />
+                    <span>{item.institution}</span>
                   </div>
-                </GlassCard>
-              ))}
-            </div>
-          </div>
-
-          {/* Right Column: Verified Certifications */}
-          <div className="lg:col-span-5 space-y-6">
-            <div className="flex items-center gap-2 mb-4">
-              <Award className="w-5 h-5 text-cyanGlow" />
-              <h3 className="text-xl font-heading font-bold text-white">
-                Verified Certifications
-              </h3>
-            </div>
-
-            <div className="space-y-4">
-              {certifications.map((cert, idx) => (
-                <GlassCard key={idx} delay={0.2 + idx * 0.1} className="p-6 space-y-4 border-cyanGlow/30 hover:border-cyanGlow">
-                  <div className="flex items-center justify-between">
-                    <span className="px-2.5 py-0.5 rounded-full bg-emeraldGlow/10 border border-emeraldGlow/30 text-emeraldGlow font-mono text-[11px] font-semibold flex items-center gap-1">
-                      <ShieldCheck className="w-3.5 h-3.5" />
-                      {cert.badge}
-                    </span>
-                    <span className="text-xs font-mono text-gray-400">
-                      {cert.issuer}
-                    </span>
+                  <div className="flex items-center gap-2 text-xs text-slate-400 font-mono">
+                    <MapPin className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                    <span>{item.location}</span>
                   </div>
-
-                  <div>
-                    <h4 className="text-base font-heading font-extrabold text-white">
-                      {cert.title}
-                    </h4>
-                    <p className="text-xs text-gray-300 mt-2 leading-relaxed">
-                      {cert.description}
-                    </p>
-                  </div>
-
-                  <div className="pt-3 border-t border-white/10 flex items-center justify-between text-xs text-cyanGlow font-mono">
-                    <span className="flex items-center gap-1">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-cyanGlow" />
-                      Coding Ninjas Academy
-                    </span>
-                    <span>Verified Credential</span>
-                  </div>
-                </GlassCard>
-              ))}
-            </div>
-          </div>
-
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
 
       </div>
     </section>
   );
 };
+
+export default EducationSection;

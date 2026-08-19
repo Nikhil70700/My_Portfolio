@@ -8,12 +8,10 @@ import {
 import { mainProject } from '../../data/portfolioData';
 import { soundFx } from '../../utils/soundEffects';
 import { GymSaathi3DShowcase } from '../3d/GymSaathi3DShowcase';
-
-// ─── Placeholder URLs (replace with real URLs when available) ─────────────────
 const LINKS = {
-  live:      '#live-project-url',       // ← Replace with real live URL
-  caseStudy: null,                      // ← Internal case study (opens modal)
-  github:    '#github-repo-url',        // ← Replace with real GitHub URL
+  live: '#live-project-url',       // ← Replace with real live URL
+  caseStudy: null,
+  github: 'https://github.com/Nikhil70700',
 };
 
 // ─── Feature data ─────────────────────────────────────────────────────────────
@@ -158,6 +156,7 @@ function CaseStudyModal({ onClose }) {
     { id: 'features', label: 'Key Features' },
     { id: 'implementation', label: 'Technical Implementation' },
     { id: 'built', label: 'What I Built' },
+    { id: 'challenges', label: 'Challenges' },
     { id: 'tech', label: 'Technologies' },
   ];
 
@@ -202,11 +201,10 @@ function CaseStudyModal({ onClose }) {
             <button
               key={tab.id}
               onClick={() => { soundFx.playClick(); setActiveTab(tab.id); }}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-mono whitespace-nowrap transition-all outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${
-                activeTab === tab.id
-                  ? 'bg-cyan-500/20 border border-cyan-500/50 text-cyan-300'
-                  : 'text-slate-400 hover:text-slate-200 border border-transparent hover:border-slate-700'
-              }`}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-mono whitespace-nowrap transition-all outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${activeTab === tab.id
+                ? 'bg-cyan-500/20 border border-cyan-500/50 text-cyan-300'
+                : 'text-slate-400 hover:text-slate-200 border border-transparent hover:border-slate-700'
+                }`}
             >
               {tab.label}
             </button>
@@ -401,11 +399,10 @@ export const MainProjectSection = () => {
                 onClick={() => handleLink(LINKS.live)}
                 onMouseEnter={() => soundFx.playHover()}
                 disabled={LINKS.live?.startsWith('#')}
-                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-heading font-bold tracking-wide transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${
-                  LINKS.live?.startsWith('#')
-                    ? 'bg-slate-800/60 border border-slate-700 text-slate-500 cursor-not-allowed'
-                    : 'bg-gradient-to-r from-cyan-500 to-sky-500 text-slate-950 hover:shadow-[0_0_28px_rgba(0,240,255,0.45)] hover:scale-[1.03] active:scale-[0.97]'
-                }`}
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-heading font-bold tracking-wide transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${LINKS.live?.startsWith('#')
+                  ? 'bg-slate-800/60 border border-slate-700 text-slate-500 cursor-not-allowed'
+                  : 'bg-gradient-to-r from-cyan-500 to-sky-500 text-slate-950 hover:shadow-[0_0_28px_rgba(0,240,255,0.45)] hover:scale-[1.03] active:scale-[0.97]'
+                  }`}
               >
                 <ExternalLink className="w-4 h-4" />
                 LIVE PROJECT
@@ -427,11 +424,10 @@ export const MainProjectSection = () => {
                 onClick={() => handleLink(LINKS.github)}
                 onMouseEnter={() => soundFx.playHover()}
                 disabled={LINKS.github?.startsWith('#')}
-                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-heading font-bold tracking-wide transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${
-                  LINKS.github?.startsWith('#')
-                    ? 'bg-slate-800/60 border border-slate-700 text-slate-500 cursor-not-allowed'
-                    : 'bg-slate-800 border border-slate-600 text-white hover:border-violet-500/60 hover:bg-slate-700'
-                }`}
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-heading font-bold tracking-wide transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${LINKS.github?.startsWith('#')
+                  ? 'bg-slate-800/60 border border-slate-700 text-slate-500 cursor-not-allowed'
+                  : 'bg-slate-800 border border-slate-600 text-white hover:border-violet-500/60 hover:bg-slate-700'
+                  }`}
               >
                 <GitBranch className="w-4 h-4" />
                 GITHUB
@@ -505,7 +501,7 @@ export const MainProjectSection = () => {
                   </span>
                 </div>
                 <code className="text-cyan-400/80 text-[10px] leading-relaxed block">
-                  React UI → Express API → MongoDB → WhatsApp Gateway
+                  React UI → Express API → MongoDB → WhatsApp Integration
                 </code>
               </div>
             </motion.div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Command, Volume2, VolumeX, Menu, X, Code2, Briefcase, GraduationCap, Mail, Sparkles, Layers, User } from 'lucide-react';
+import { Command, Volume2, VolumeX, Menu, X, Code2, Briefcase, GraduationCap, Mail, Sparkles, Layers, User, Award } from 'lucide-react';
 import { soundFx } from '../../utils/soundEffects';
 
 export const Navbar = ({ onOpenCommand, soundEnabled, setSoundEnabled }) => {
@@ -11,8 +11,8 @@ export const Navbar = ({ onOpenCommand, soundEnabled, setSoundEnabled }) => {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 30);
-      
-      const sections = ['hero', 'about', 'skills', 'project', 'experience', 'education', 'contact'];
+
+      const sections = ['hero', 'about', 'skills', 'project', 'experience', 'education', 'certifications', 'contact'];
       for (const section of sections) {
         const el = document.getElementById(section);
         if (el) {
@@ -29,12 +29,13 @@ export const Navbar = ({ onOpenCommand, soundEnabled, setSoundEnabled }) => {
   }, []);
 
   const navLinks = [
-    { id: 'hero', label: 'Overview', icon: Sparkles },
+    { id: 'hero', label: 'Home', icon: Sparkles },
     { id: 'about', label: 'About', icon: User },
-    { id: 'skills', label: 'Tech Stack', icon: Code2 },
-    { id: 'project', label: 'GymSaathi SaaS', icon: Layers },
+    { id: 'skills', label: 'Skills', icon: Code2 },
     { id: 'experience', label: 'Experience', icon: Briefcase },
+    { id: 'project', label: 'Projects', icon: Layers },
     { id: 'education', label: 'Education', icon: GraduationCap },
+    { id: 'certifications', label: 'Certificates', icon: Award },
     { id: 'contact', label: 'Contact', icon: Mail },
   ];
 
@@ -52,9 +53,8 @@ export const Navbar = ({ onOpenCommand, soundEnabled, setSoundEnabled }) => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        scrolled ? 'py-3 bg-obsidian-950/70 backdrop-blur-xl border-b border-white/10 shadow-2xl' : 'py-5 bg-transparent'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'py-3 bg-obsidian-950/80 backdrop-blur-xl border-b border-white/10 shadow-2xl' : 'py-4 sm:py-5 bg-transparent'
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Brand Logo */}
@@ -63,7 +63,7 @@ export const Navbar = ({ onOpenCommand, soundEnabled, setSoundEnabled }) => {
           className="flex items-center gap-3 group focus:outline-none"
         >
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyanGlow/20 to-blueGlow/20 border border-cyanGlow/40 flex items-center justify-center font-heading font-bold text-cyanGlow group-hover:scale-105 group-hover:border-cyanGlow transition-all shadow-[0_0_15px_rgba(0,240,255,0.2)]">
-            NKP
+            N
           </div>
           <div className="text-left hidden sm:block">
             <span className="block font-heading font-bold text-sm tracking-wide text-white group-hover:text-cyanGlow transition-colors">
@@ -84,9 +84,8 @@ export const Navbar = ({ onOpenCommand, soundEnabled, setSoundEnabled }) => {
                 key={link.id}
                 onClick={() => handleNavClick(link.id)}
                 onMouseEnter={() => soundFx.playHover()}
-                className={`relative px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${
-                  isActive ? 'text-white font-semibold' : 'text-gray-400 hover:text-gray-200'
-                }`}
+                className={`relative px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${isActive ? 'text-white font-semibold' : 'text-gray-400 hover:text-gray-200'
+                  }`}
               >
                 {isActive && (
                   <motion.div
