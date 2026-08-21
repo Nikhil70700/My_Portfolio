@@ -8,7 +8,7 @@ export const personalInfo = {
   github: "https://github.com/Nikhil70700",
   linkedin: "https://www.linkedin.com/in/nikhil-kumar-pandey-747047190/",
   resume: "Nikhil_Kumar_Pandey_Resume.pdf",
-  about: "I am a software developer with experience in frontend, backend and full-stack web development. I focus on building practical, scalable, real-world web applications and SaaS platforms.",
+  about: "Full-stack developer with hands-on experience building responsive, production-grade web applications using React.js, Node.js, and Express.js. Skilled in developing SaaS dashboards, API integrations, and role-based systems, with growing exposure to Generative AI and Agentic AI tooling for accelerated development.",
   objectiveSummary: [
     "Practical Software Developer with hands-on full-stack experience.",
     "Specialized in React.js, Node.js, Express.js, and modern database architectures.",
@@ -16,7 +16,7 @@ export const personalInfo = {
     "Versatile with AI-assisted development tools, Generative AI, Agentic AI, and Prompt Engineering."
   ],
   stats: [
-    { label: "Core Roles", value: "3 Roles", desc: "SaaS, Full Stack & WordPress" },
+    { label: "Live Impact", value: "20+ Gyms", desc: "300+ members on GymSaathi" },
     { label: "Primary Stack", value: "React & Node", desc: "MERN / Full-Stack SaaS" },
     { label: "Certifications", value: "2 Badges", desc: "Coding Ninjas Java & DSA" },
     { label: "Special Focus", value: "AI Workflows", desc: "Generative & Agentic AI" }
@@ -95,6 +95,11 @@ export const technicalProfile = [
         name: "Node.js",
         icon: "Server",
         description: "Server-side JavaScript runtime used for building backend services in full-stack and SaaS applications."
+      },
+      {
+        name: "Express.js",
+        icon: "Server",
+        description: "Web framework used on top of Node.js for REST API development, routing, and business logic across full-stack projects."
       }
     ]
   },
@@ -154,14 +159,14 @@ export const mainProject = {
   tagline: "Full-stack SaaS ecosystem for gym operations, subscription automation, and WhatsApp communication.",
   techStack: ["React.js", "Node.js", "Express.js", "REST APIs", "MongoDB", "WhatsApp Integration"],
   highlights: [
-    "Full-Stack SaaS Architecture: Developed a comprehensive gym management system streamlining gym operations and enhancing member engagement.",
+    "Full-Stack SaaS Architecture: Developed a comprehensive gym management system now used by 20+ gyms and 300+ members to streamline operations and enhance member engagement.",
     "Member Onboarding Workflow: Implemented automated onboarding with controlled credential delivery based on payment verification and BCA charges logic.",
     "Role-Based Access Control: Designed distinct, secure dashboards for Super Admin and Gym Admin users.",
     "Gym & Member Management: Engineered gym creation, active member management, and automated subscription handling.",
     "QR Payment Verification: Built QR-based payment tracking with manual verification workflow for non-gateway transactions.",
     "Billing & Invoice Engine: Developed complex subscription logic including automatic monthly invoice generation for annual plans.",
     "WhatsApp API Integration: Integrated WhatsApp automated messaging for instant notification updates and login credential delivery.",
-    "Performance & UI Optimization: Enhanced responsiveness, speed, and cross-device experience across all platform modules."
+    "Performance & UI Optimization: Enhanced responsiveness, speed, and cross-device experience across 10+ modules, including dashboards, workout planners, and billing screens."
   ],
   architectureFlow: [
     { step: "01", title: "Member Onboarding", desc: "Registration input + BCA charge verification" },
@@ -186,7 +191,7 @@ export const experiences = [
       "Performance Optimization", "AI-Assisted Dev"
     ],
     responsibilities: [
-      "Developed and maintained a responsive gym management SaaS using React.js, JavaScript, Node.js and Express.js.",
+      "Developed and maintained a responsive gym management SaaS using React.js, JavaScript, Node.js and Express.js, currently serving 20+ gyms and 300+ end members.",
       "Built workout planner modules, dashboards, reusable UI components and member management features.",
       "Integrated APIs, fixed bugs and optimized performance, responsiveness and user experience.",
       "Leveraged AI-assisted development tools to accelerate development and collaborated on deployment-ready releases."

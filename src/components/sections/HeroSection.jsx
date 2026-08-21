@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import { personalInfo } from '../../data/portfolioData';
 import { soundFx } from '../../utils/soundEffects';
-import { Hero3DScene } from '../3d/Hero3DScene';
+import { AutomationPipeline } from '../pipeline/AutomationPipeline';
 
 export const HeroSection = ({ _onOpenCommand }) => {
 
@@ -151,36 +151,58 @@ export const HeroSection = ({ _onOpenCommand }) => {
               ))}
             </motion.div>
 
-            {/* Concise Bio */}
+            {/* Concise Bio — leads with the concrete proof point, not generic language */}
             <motion.div variants={itemVariants}>
               <p className="text-sm sm:text-base text-gray-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-sans font-normal">
-                Building responsive, scalable and user-focused web applications across frontend, backend and full-stack development with hands-on SaaS experience.
+                Built and shipped <strong className="text-white font-semibold">GymSaathi</strong>, a full-stack SaaS
+                platform now serving <strong className="text-white font-semibold">20+ gyms and 300+ members</strong>,
+                with subscription automation and WhatsApp-based communication. Comfortable owning a feature
+                end-to-end — frontend, backend, and the database in between.
               </p>
+            </motion.div>
+
+            {/* Recruiter Quick Facts — scannable in under 5 seconds */}
+            <motion.div variants={itemVariants}>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 max-w-xl mx-auto lg:mx-0">
+                {personalInfo.stats.map((stat) => (
+                  <div
+                    key={stat.label}
+                    className="px-3 py-2.5 rounded-lg glass-panel border-gray-800/80 text-center lg:text-left"
+                  >
+                    <p className="text-sm sm:text-base font-heading font-bold text-cyanGlow leading-tight">
+                      {stat.value}
+                    </p>
+                    <p className="text-[10px] sm:text-[11px] font-mono text-gray-400 uppercase tracking-wide mt-0.5">
+                      {stat.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </motion.div>
 
             {/* CTA Buttons Reveal: 3 Primary Actions */}
             <motion.div variants={itemVariants} className="pt-2">
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3">
 
+                {/* DOWNLOAD RESUME — primary CTA; this is what a recruiter wants first */}
+                <button
+                  onClick={handleDownloadResume}
+                  onMouseEnter={() => soundFx.playHover()}
+                  className="px-5 py-3 rounded-xl bg-gradient-to-r from-cyanGlow via-cyan-400 to-blueGlow text-obsidian-950 font-heading font-extrabold text-xs sm:text-sm tracking-wider uppercase hover:shadow-[0_0_30px_rgba(0,240,255,0.6)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center gap-2 group cursor-pointer"
+                >
+                  <Download className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
+                  <span>DOWNLOAD RESUME</span>
+                </button>
+
                 {/* VIEW MY WORK */}
                 <button
                   onClick={scrollToWork}
                   onMouseEnter={() => soundFx.playHover()}
-                  className="px-5 py-3 rounded-xl bg-gradient-to-r from-cyanGlow via-cyan-400 to-blueGlow text-obsidian-950 font-heading font-extrabold text-xs sm:text-sm tracking-wider uppercase hover:shadow-[0_0_30px_rgba(0,240,255,0.6)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center gap-2 group cursor-pointer"
+                  className="px-5 py-3 rounded-xl glass-panel hover:border-cyanGlow/60 text-white font-heading font-bold text-xs sm:text-sm tracking-wider uppercase hover:bg-white/10 hover:shadow-[0_0_20px_rgba(0,240,255,0.2)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center gap-2 group cursor-pointer"
                 >
                   <Eye className="w-4 h-4 group-hover:scale-110 transition-transform" />
                   <span>VIEW MY WORK</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                </button>
-
-                {/* DOWNLOAD RESUME */}
-                <button
-                  onClick={handleDownloadResume}
-                  onMouseEnter={() => soundFx.playHover()}
-                  className="px-5 py-3 rounded-xl glass-panel hover:border-cyanGlow/60 text-white font-heading font-bold text-xs sm:text-sm tracking-wider uppercase hover:bg-white/10 hover:shadow-[0_0_20px_rgba(0,240,255,0.2)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center gap-2 group cursor-pointer"
-                >
-                  <Download className="w-4 h-4 text-cyanGlow group-hover:translate-y-0.5 transition-transform" />
-                  <span>DOWNLOAD RESUME</span>
                 </button>
 
                 {/* CONTACT ME */}
@@ -263,9 +285,9 @@ export const HeroSection = ({ _onOpenCommand }) => {
                 against the text column's natural height and left the
                 absolute-positioned glow halo below with nothing to fill. */}
             <div className="w-full h-[380px] sm:h-[440px] lg:h-[480px] relative">
-              {/* Outer Glow Halo behind 3D Scene */}
+              {/* Outer Glow Halo behind the animation */}
               <div className="absolute inset-0 bg-gradient-to-tr from-cyanGlow/20 to-blueGlow/20 rounded-full blur-3xl opacity-40 pointer-events-none" />
-              <Hero3DScene />
+              <AutomationPipeline />
             </div>
           </motion.div>
 
