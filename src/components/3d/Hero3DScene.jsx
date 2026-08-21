@@ -8,20 +8,17 @@ import { Suspense } from 'react';
 
 function CentralCore() {
   const outerMeshRef = useRef();
-  const innerMeshRef = useRef();
+  const innerRef = useRef();
 
   useFrame((_, delta) => {
     if (outerMeshRef.current) {
       outerMeshRef.current.rotation.x += delta * 0.08;
       outerMeshRef.current.rotation.y += delta * 0.12;
     }
-    if (innerMeshRef.current) {
+    if (innerRef.current) {
       innerRef.current.rotation.y -= delta * 0.15;
     }
   });
-
-  // Sleek geometric core structure
-  const innerRef = useRef();
 
   return (
     <group scale={1.15}>
@@ -102,8 +99,8 @@ function TechNode({ position, color, label, iconText, orbitOffset = 0, radius = 
       <Html position={[0, 0.6, 0]} center distanceFactor={10} zIndexRange={[100, 0]}>
         <div
           className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[11px] font-mono whitespace-nowrap transition-all duration-300 pointer-events-none select-none ${hovered
-              ? 'bg-obsidian-900/95 border-cyanGlow text-cyanGlow shadow-[0_0_15px_rgba(0,240,255,0.4)] scale-110'
-              : 'bg-obsidian-950/80 border-gray-700/60 text-gray-200 backdrop-blur-md'
+            ? 'bg-obsidian-900/95 border-cyanGlow text-cyanGlow shadow-[0_0_15px_rgba(0,240,255,0.4)] scale-110'
+            : 'bg-obsidian-950/80 border-gray-700/60 text-gray-200 backdrop-blur-md'
             }`}
         >
           <span className="font-bold text-xs" style={{ color }}>{iconText}</span>

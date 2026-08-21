@@ -3,6 +3,25 @@ class SoundSynthesizer {
   constructor() {
     this.ctx = null;
     this.enabled = true;
+    this.unlocked = false;
+
+    // Chrome/Safari block AudioContext from running until a *real* user
+    // gesture (click / keydown / touchstart) happens on the page — a mere
+    // hover does not count. Wire up a one-time listener so we create/resume
+    // the context at the earliest legitimate moment instead of on every
+    // hover, which is what was spamming the console before.
+    if (typeof window !== 'undefined') {
+      const unlock = () => {
+        this.init();
+        this.unlocked = true;
+        window.removeEventListener('pointerdown', unlock);
+        window.removeEventListener('keydown', unlock);
+        window.removeEventListener('touchstart', unlock);
+      };
+      window.addEventListener('pointerdown', unlock, { once: true });
+      window.addEventListener('keydown', unlock, { once: true });
+      window.addEventListener('touchstart', unlock, { once: true });
+    }
   }
 
   init() {
@@ -26,7 +45,7 @@ class SoundSynthesizer {
   }
 
   playBeep(freq = 440, type = 'sine', duration = 0.08, vol = 0.05) {
-    if (!this.enabled) return;
+    if (!this.enabled || !this.unlocked) return;
     try {
       this.init();
       if (!this.ctx) return;
@@ -36,7 +55,7 @@ class SoundSynthesizer {
 
       osc.type = type;
       osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-      
+
       gain.gain.setValueAtTime(vol, this.ctx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
 
@@ -59,7 +78,7 @@ class SoundSynthesizer {
   }
 
   playSuccess() {
-    if (!this.enabled) return;
+    if (!this.enabled || !this.unlocked) return;
     try {
       this.init();
       if (!this.ctx) return;
@@ -76,7 +95,7 @@ class SoundSynthesizer {
         osc.start(now + idx * 0.06);
         osc.stop(now + idx * 0.06 + 0.15);
       });
-    } catch {}
+    } catch { }
   }
 }
 

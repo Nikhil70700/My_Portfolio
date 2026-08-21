@@ -5,7 +5,7 @@ import * as THREE from 'three';
 
 const ORBIT_RADIUS = 2.1;
 
-// Central Developer Core Structure with high-contrast glowing elements
+
 function DeveloperCore() {
   const coreRef = useRef();
   const outerRingRef = useRef();
@@ -27,7 +27,7 @@ function DeveloperCore() {
 
   return (
     <group scale={1.1}>
-      {/* Outer Sleek Orbit Ring */}
+
       <mesh ref={outerRingRef}>
         <torusGeometry args={[1.7, 0.025, 16, 80]} />
         <meshStandardMaterial
@@ -39,7 +39,7 @@ function DeveloperCore() {
         />
       </mesh>
 
-      {/* Main Core Polyhedron */}
+
       <mesh ref={coreRef}>
         <octahedronGeometry args={[1.05, 0]} />
         <meshStandardMaterial
@@ -54,7 +54,6 @@ function DeveloperCore() {
         />
       </mesh>
 
-      {/* Inner Glowing Crystal */}
       <mesh ref={innerCubeRef}>
         <boxGeometry args={[0.65, 0.65, 0.65]} />
         <meshStandardMaterial
@@ -69,7 +68,7 @@ function DeveloperCore() {
   );
 }
 
-// Tech Node with visible glowing badge & icon
+
 function TechOrbitNode({ position, color, label, iconText, angleOffset = 0 }) {
   const groupRef = useRef();
 
@@ -93,16 +92,15 @@ function TechOrbitNode({ position, color, label, iconText, angleOffset = 0 }) {
 
   return (
     <group ref={groupRef} position={position}>
-      {/* Node Sphere */}
+
       <mesh geometry={sphereGeo} material={sphereMat} />
 
-      {/* Halo ring */}
+
       <mesh rotation={[Math.PI / 2, 0, 0]}>
         <ringGeometry args={[0.3, 0.34, 24]} />
         <meshBasicMaterial color={color} transparent opacity={0.6} side={THREE.DoubleSide} />
       </mesh>
 
-      {/* Clean HTML Badge */}
       <Html position={[0, 0.48, 0]} center distanceFactor={8}>
         <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-950/90 border border-slate-700/80 text-slate-100 text-[10px] font-mono whitespace-nowrap shadow-lg select-none pointer-events-none">
           <span className="font-bold text-xs" style={{ color }}>{iconText}</span>
@@ -113,7 +111,7 @@ function TechOrbitNode({ position, color, label, iconText, angleOffset = 0 }) {
   );
 }
 
-// Scene Root with mouse reaction
+
 function EcosystemSceneRoot() {
   const sceneRef = useRef();
 
