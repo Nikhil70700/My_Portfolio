@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import { personalInfo } from '../../data/portfolioData';
 import { soundFx } from '../../utils/soundEffects';
-import { AutomationPipeline } from '../pipeline/AutomationPipeline';
+import { CodeToImpact } from '../pipeline/CodeToImpact';
 
 export const HeroSection = ({ _onOpenCommand }) => {
 
@@ -287,7 +287,7 @@ export const HeroSection = ({ _onOpenCommand }) => {
             <div className="w-full h-[380px] sm:h-[440px] lg:h-[480px] relative">
               {/* Outer Glow Halo behind the animation */}
               <div className="absolute inset-0 bg-gradient-to-tr from-cyanGlow/20 to-blueGlow/20 rounded-full blur-3xl opacity-40 pointer-events-none" />
-              <AutomationPipeline />
+              <CodeToImpact />
             </div>
           </motion.div>
 
